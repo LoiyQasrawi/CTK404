@@ -1,0 +1,57 @@
+
+H1{
+
+color: green;
+
+}
+
+
+H2{
+
+    color: rgb(0, 212, 127);
+}
+
+
+p{
+
+    color: rgb(49, 23, 165);
+}
+
+#Nothing{ 
+    color: rgb(255, 0, 0);
+}
+
+#more{ 
+    color: rgb(255, 0, 0);
+}
+
+
+
+.many{
+
+    color: rgb(2, 0, 0);
+}
+
+.bluebg{
+
+   background-color: rgb(104, 110, 170);
+
+}
+
+
+.a:visited {
+    color: rgb(255, 0, 0); 
+    background-color: darkblue; 
+  }
+  
+ 
+  .a:hover {
+    color: yellow; 
+    background-color: darkblue; 
+  }
+  
+
+  .a:active {
+    color: rgb(30, 255, 0); 
+    background-color: navy;
+  }
