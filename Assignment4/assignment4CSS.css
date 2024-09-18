@@ -1,0 +1,97 @@
+body {
+    font-family: Helvetica;
+    font-style:normal;
+    font-weight: bold;
+    font-size: 15px;;
+
+    
+    background-color: #e9e9fa;
+    background-image: url(bgimage.jpeg);
+    background-repeat:no-repeat;
+     background-position: top left;
+        
+}
+
+img {
+    width: 1500px; 
+    height: auto; 
+}
+
+.textcenter {
+    text-align: center;
+}
+
+.justifytext {
+    text-align: justify; 
+    max-width: 800px;       
+}
+
+
+H1{
+
+color: rgb(212, 129, 4);
+font-style: italic;
+font-weight: normal;
+
+}
+
+
+H2{
+
+color: rgb(212, 129, 4);
+font-style: italic;
+font-weight: normal;
+}
+
+
+.border{
+
+    border: 2px solid #000000;
+    padding: 10px 10px 10px 10px;
+    background-color: #fbff00;
+}
+
+p{
+
+    color: rgb(7, 160, 237);
+}
+
+
+#Nothing{ 
+    color: rgb(255, 0, 0);
+}
+
+#more{ 
+    color: rgb(255, 0, 0);
+}
+
+
+
+.many{
+
+    color: rgb(2, 0, 0);
+}
+
+.bluebg{
+
+   background-color: rgb(192, 22, 22);
+
+}
+
+
+.a:visited {
+    color: rgb(255, 255, 255); 
+    background-color: rgb(109, 0, 139); 
+  }
+  
+ 
+  .a:hover {
+    color: yellow; 
+    background-color: rgb(109, 0, 139); 
+  }
+  
+
+  .a:active {
+    color: rgb(30, 255, 0); 
+    background-color: rgb(109, 0, 139); 
+  }
