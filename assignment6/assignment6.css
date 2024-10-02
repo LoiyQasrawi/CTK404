@@ -14,7 +14,9 @@ header {
   text-align: center;
   border: #000000;  
   background-color: rgb(0, 0, 0);
-
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 15px;
 }
 
 
@@ -22,7 +24,7 @@ header {
   margin: 1m;
   padding: 0;
   width:960px;
-  border: 1px solid red;
+  border: 5px solid rgb(0, 0, 0);
   background-color: rgb(255, 255, 255);
   display: grid;
   grid-template-columns: repeat(6)
@@ -45,6 +47,7 @@ nav li {
       background-color: rgb(224, 0, 0); 
       border: 2px solid #000000;
       margin-right: 15px;
+      margin-bottom: 15px;
       width: 180px;
       display:inline-block;     
 }
@@ -69,15 +72,24 @@ main {
 }
 
 #block {
- float: right;
- margin-left: 100px;
+ float: left ;
+ margin-right: 100px;
+ border: 2px solid #000000;
 
 }
 
 
 footer {
-  background-color: rgb(209, 162, 254);
+  background-color: rgb(224, 0, 0);
   grid-column: span 6;
   text-align: center;
+  border-top: 5px solid #000000;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: italic;
+  font-size: small;
+}
 
+h2{
+  font-family: Helvetica, sans-serif;
+  border-bottom: 2px solid black; 
 }
