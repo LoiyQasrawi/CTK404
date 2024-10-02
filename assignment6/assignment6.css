@@ -1,8 +1,10 @@
 body{
 
   background-image:url('a62.png') ;
-  padding: 500px;
-
+  padding: 20px;
+  max-width: 800px; 
+  margin: 20px auto;
+  box-sizing: border-box;
   }
   
 
@@ -28,6 +30,7 @@ header {
   background-color: rgb(255, 255, 255);
   display: grid;
   grid-template-columns: repeat(6)
+  
 }
 
 nav {
@@ -49,13 +52,12 @@ nav li {
       margin-right: 15px;
       margin-bottom: 15px;
       width: 180px;
-      display:inline-block;     
+      display:inline-block; 
+      cursor:grab;   
 }
 nav li a{
   font-family: Helvetica, sans-serif;
-  font-weight: bold;
   color: rgb(255, 255, 255);
-  
   padding: 10px;
   text-decoration: none;
   display: block;
@@ -73,9 +75,9 @@ main {
 
 #block {
  float: left ;
- margin-right: 100px;
- border: 2px solid #000000;
-
+ margin-right: 15px;
+ border: 3px solid #000000;
+ padding: 10px;
 }
 
 
@@ -87,9 +89,36 @@ footer {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-style: italic;
   font-size: small;
+  color: #ffffff;
 }
 
 h2{
   font-family: Helvetica, sans-serif;
-  border-bottom: 2px solid black; 
+  border-bottom: 2px solid black;
+  margin-right: 15px;
+  margin-top: 15px;
+  
+}
+
+.styled {
+  font-family: Georgia, serif; 
+  font-weight: bold;          
+  text-align: justify;    
+  margin-right: 15px;
+
+}
+
+.b {
+  text-decoration: none; 
+  color: inherit; 
+  font-weight: bold;
+}
+
+.b:visited {
+  color: rgb(255, 0, 0);
+}
+
+.b:hover {
+  color: rgb(8, 0, 255);
+  text-decoration: underline;
 }
