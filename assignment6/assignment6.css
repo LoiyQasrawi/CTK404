@@ -5,6 +5,7 @@ body{
   max-width: 1000px; 
   margin: 20px auto;
   box-sizing: border-box;
+
   }
   
 
@@ -121,4 +122,9 @@ h2{
 .b:hover {
   color: rgb(8, 0, 255);
   text-decoration: underline;
+}
+
+.margin{
+
+  margin-right: 15px;
 }
