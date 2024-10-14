@@ -99,6 +99,7 @@ aside {
   grid-column: 1;
   grid-row: 3;
   text-align: justify;
+  font-weight: bold;
 }
 
 main {
