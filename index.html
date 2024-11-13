@@ -1,2 +1,189 @@
-Hi, This's Loiy.
-Thanks
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A-Frame MR Video Stream</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <script>
+      // Movement controls - unchanged
+      AFRAME.registerComponent('quest-movement-controls', {
+        init: function () {
+          this.moveSpeed = 0.15;
+          this.handleAxisMove = this.handleAxisMove.bind(this);
+          this.el.addEventListener('thumbstickmoved', this.handleAxisMove);
+        },
+
+        handleAxisMove: function (evt) {
+          const { x, y } = evt.detail;
+          const position = this.el.object3D.position;
+          if (evt.target.id === 'leftHand' || evt.target.id === 'rightHand') {
+            position.z += y * this.moveSpeed;
+            position.x += x * this.moveSpeed;
+          }
+        }
+      });
+
+      // Grabbable component for the video plane
+      AFRAME.registerComponent('grabbable', {
+        init: function () {
+          this.grabbing = false;
+          this.initialPosition = new THREE.Vector3();
+          this.initialRotation = new THREE.Euler();
+          
+          // Store initial transform
+          this.el.object3D.getWorldPosition(this.initialPosition);
+          this.el.object3D.rotation.copy(this.initialRotation);
+
+          // Bind methods
+          this.onTriggerDown = this.onTriggerDown.bind(this);
+          this.onTriggerUp = this.onTriggerUp.bind(this);
+          this.onGripDown = this.onGripDown.bind(this);
+          this.onGripUp = this.onGripUp.bind(this);
+
+          // Add event listeners
+          this.el.addEventListener('triggerdown', this.onTriggerDown);
+          this.el.addEventListener('triggerup', this.onTriggerUp);
+          this.el.addEventListener('gripdown', this.onGripDown);
+          this.el.addEventListener('gripup', this.onGripUp);
+        },
+
+        onTriggerDown: function (evt) {
+          const hand = evt.target;
+          if (!this.grabbing) {
+            this.grabbing = true;
+            hand.object3D.attach(this.el.object3D);
+            // Make semi-transparent while grabbed
+            this.el.setAttribute('material', 'opacity', 0.7);
+          }
+        },
+
+        onTriggerUp: function (evt) {
+          if (this.grabbing) {
+            this.grabbing = false;
+            // Reattach to scene
+            this.el.sceneEl.object3D.attach(this.el.object3D);
+            // Restore opacity
+            this.el.setAttribute('material', 'opacity', 1.0);
+          }
+        },
+
+        onGripDown: function (evt) {
+          // Optional: Add rotation mode with grip button
+          if (this.grabbing) {
+            this.rotating = true;
+          }
+        },
+
+        onGripUp: function (evt) {
+          this.rotating = false;
+        }
+      });
+
+      // Video stream handler - unchanged
+      AFRAME.registerComponent('video-handler', {
+        init: function() {
+          this.videoEl = document.createElement('video');
+          this.videoEl.setAttribute('id', 'streamVideo');
+          this.videoEl.setAttribute('playsinline', '');
+          this.videoEl.setAttribute('webkit-playsinline', '');
+          
+          // Create video texture
+          const videoTexture = new THREE.VideoTexture(this.videoEl);
+          videoTexture.minFilter = THREE.LinearFilter;
+          videoTexture.magFilter = THREE.LinearFilter;
+          videoTexture.format = THREE.RGBFormat;
+
+          // Apply texture to entity
+          this.el.setAttribute('material', {
+            src: this.videoEl,
+            transparent: true,
+            alphaTest: 0.5
+          });
+
+          // Set up PeerJS
+          const peer = new Peer('quest-receiver');
+          
+          peer.on('open', (id) => {
+            console.log('Ready to receive video. ID:', id);
+          });
+          
+          peer.on('call', (call) => {
+            console.log('Receiving call...');
+            call.answer();
+            
+            call.on('stream', (remoteStream) => {
+              console.log('Got remote stream');
+              this.videoEl.srcObject = remoteStream;
+              this.videoEl.play().catch(error => {
+                console.log("Video play error:", error);
+              });
+
+              this.videoEl.addEventListener('loadedmetadata', () => {
+                this.updateAspectRatio();
+              });
+
+              this.videoEl.addEventListener('resize', () => {
+                this.updateAspectRatio();
+              });
+            });
+          });
+
+          peer.on('error', (err) => {
+            console.error('PeerJS error:', err);
+          });
+        },
+
+        updateAspectRatio: function() {
+          const videoWidth = this.videoEl.videoWidth;
+          const videoHeight = this.videoEl.videoHeight;
+          const isPortrait = videoHeight > videoWidth;
+          
+          if (isPortrait) {
+            const aspectRatio = videoWidth / videoHeight;
+            this.el.setAttribute('rotation', '0 0 90');
+            this.el.setAttribute('height', 2);
+            this.el.setAttribute('width', 2 * aspectRatio);
+          } else {
+            const aspectRatio = videoWidth / videoHeight;
+            this.el.setAttribute('rotation', '0 0 0');
+            this.el.setAttribute('height', 1);
+            this.el.setAttribute('width', aspectRatio);
+          }
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene ar>
+      <!-- Camera rig with controls -->
+      <a-entity id="rig" position="0 0 0" quest-movement-controls>
+        <a-entity id="head" camera position="0 1.6 0" look-controls="pointerLockEnabled: false"></a-entity>
+        
+        <!-- Hand controllers -->
+        <a-entity id="leftHand" 
+                  oculus-touch-controls="hand: left"
+                  position="-0.2 1.3 -0.5"
+                  raycaster="objects: .grabbable; far: 0.1"></a-entity>
+        <a-entity id="rightHand" 
+                  oculus-touch-controls="hand: right"
+                  position="0.2 1.3 -0.5"
+                  raycaster="objects: .grabbable; far: 0.1"></a-entity>
+      </a-entity>
+
+      <!-- Video quad - now grabbable -->
+      <a-plane id="videoPlane"
+               class="grabbable"
+               position="0 1.6 -2"
+               width="1"
+               height="1"
+               video-handler
+               grabbable></a-plane>
+
+      <!-- Instructions -->
+      <a-text value="Use thumbsticks to move\nUse trigger to grab and move screen\nStream will appear on screen" 
+              position="-1 1.7 -3"
+              color="#FFFFFF"
+              scale="0.5 0.5 0.5"></a-text>
+    </a-scene>
+  </body>
+</html>
