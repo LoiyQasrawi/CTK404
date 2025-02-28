@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentZen - Stress Relief Chat</title>
+    <style>
+        body {
+            font-family: 'Geneva', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fb0202f5,#096efb);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #chat-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        #chat-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #mytext {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #097afb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        #mytext:focus {
+            border-color: #FF7A00;
+        }
+        #submit-button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #097afb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #submit-button:hover {
+            background-color: #FF7A00;
+        }
+        #response-container {
+            width: 100%;
+            margin-top: 10px;
+        }
+        #response {
+            width: calc(100% - 22px);
+            height: 200px;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold; /* Change font weight to bold */
+            resize: none;
+        }
+        #loading {
+            display: none;
+            margin-top: 10px;
+            text-align: center;
+        }
+        #loading .spinner {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #097afb 0%,
+                #FF7A00 25%,
+                #097afb 50%,
+                #FF7A00 75%,
+                #097afb 100%
+            );
+            animation: rotate 1s linear infinite;
+        }
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        @media (max-width: 600px) {
+            #chat-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1 style="text-align: center; color: #097afb;">Welcome to StudentZen</h1>
+        <form id="chat-form">
+            <label for="mytext" style="font-size: 18px; color: #333;">How can I help you?</label>
+            <input type="text" id="mytext" required placeholder="Type here..." autocomplete="off">
+            <button type="submit" id="submit-button">Get Zen</button>
+        </form>
+        <div id="response-container">
+            <h2 style="color: #097afb;">Response:</h2>
+            <textarea id="response" rows="10" readonly></textarea>
+            <div id="loading" aria-hidden="true">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </div>
+    <script src="StudentZen.js"></script>
+    <script>
+        const form = document.getElementById('chat-form');
+        const responseTextarea = document.getElementById('response');
+        const loadingIndicator = document.getElementById('loading');
+        let previousQuestion = ""; // Variable to store previous question
+        let previousResponse = ""; // Variable to store previous response
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const userInput = document.getElementById('mytext').value.trim();
+            if (userInput === '') return;
+
+            loadingIndicator.style.display = 'block';
+            previousQuestion = userInput; // Store the current question as previous question
+
+            // Simulating API call delay for 2 seconds
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Example response:
+            const currentResponse = "Here are some ways to relieve stress: 1. Take a deep breath. 2. Go for a walk. 3. Listen to calming music.";
+            previousResponse += "User's question: " + previousQuestion + "\n" + "Response: " + currentResponse + "\n\n"; // Append the previous question and current response to previous response
+            responseTextarea.value = previousResponse; // Display all responses
+
+            loadingIndicator.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

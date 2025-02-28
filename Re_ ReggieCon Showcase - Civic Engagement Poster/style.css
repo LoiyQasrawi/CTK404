@@ -1,0 +1,163 @@
+/* Base styles */
+body, h1, h2, p, ul, li, button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+}
+
+/* Header and Navigation */
+header {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  background-color: white;
+}
+
+nav img#logo {
+  max-width: 180px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #00539F;
+  font-weight: bold;
+
+  padding: 0 1em;
+}
+
+/* Main Banner */
+#main-banner {
+  background: url('https://i.ibb.co/8c2XpvR/White-modern-and-clean-fashion-collection-landing-page-template.png') no-repeat center center/cover;
+  padding: 100px 0;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+#main-banner .banner-content {
+  background-color: rgba(0, 83, 159, 0.7);
+  display: inline-block;
+  padding: 2em;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Feature Areas */
+#features {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 2em 0;
+}
+
+#features article {
+  flex: 1;
+  min-width: 300px;
+  margin: 1em;
+  padding: 9em;
+  position: relative;
+  color: white;
+  background-size: cover; /* Ensures the image covers the area */
+  background-position: center; /* Center the background image */
+}
+
+#drug-poisoning {
+  background-image: url('https://i.ibb.co/ZSJ8VQy/Screenshot-2024-04-27-at-3-38-35-PM.png');
+}
+
+#wellness-coaching {
+  background-image: url('https://i.ibb.co/Qp6T4nk/Blush-Modern-Stylish-New-Post-Instagram-Post.png');
+}
+
+#features article h2, #features article p {
+  position: relative;
+  z-index: 3;
+}
+
+#features article::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 83, 159, 0.7); /* Blue background overlay */
+  z-index: 2;
+}
+
+/* Buttons */
+#features button, #main-banner button {
+  
+  background-color: red; /* Dark blue background */
+  color: white; /* White text */
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners */
+  font-weight: bold; /* Bold font 
+  */
+  position: relative;
+   z-index: 3;
+  
+  
+}
+
+/* News and Events */
+#news-events {
+  padding: 2em;
+  background-color: #f2f2f2;
+  text-align: center;
+  
+}
+
+#news-events h2, #news-events p {
+  
+    rgba(0,0,0,0.3);
+}
+
+/* Footer */
+footer {
+  background: url('https://i.ibb.co/hxNFsTH/Beige-Simple-Elegant-Personal-Linked-In-Banner.png') no-repeat center center/cover;
+  padding: 2em;
+  text-align: center;
+  color: white;
+}
+
+.footer-content {
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
+  display: inline-block;
+  padding: 1em;
+  border-radius: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+  }
+  
+  #features {
+    flex-direction: column;
+  }
+
+  #features article {
+    width: 100%; /* Full width on smaller screens */
+  }
+}
